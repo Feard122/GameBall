@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameBall
 {
     public class GameController : MonoBehaviour
     {
         private List<InteractiveObject> _interactiveObjects;
+        private DisplayEndGame _displayEndGame; 
 
         private void Awake()
         {
             _interactiveObjects = FindObjectsOfType<InteractiveObject>().ToList();
+            _displayEndGame = new DisplayEndGame();
             var displayBonuses = new DisplayBonuses();
             foreach (var interactiveObject in _interactiveObjects)
             {
+                if (interactiveObject is Trap trap)
+                {
+                    trap.CaughtPlayer += _displayEndGame.GameOver;
+
+                }
                 interactiveObject.Initialization(displayBonuses);
                 interactiveObject.OnDestroyChange += InteractiveObjectOnOnDestroyChange;
             }
@@ -24,6 +32,12 @@ namespace GameBall
         {
             value.OnDestroyChange -= InteractiveObjectOnOnDestroyChange;
             _interactiveObjects.Remove(value);
+        }
+
+        public void NewGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Time.timeScale = 1;
         }
 
         private void Update()
@@ -51,6 +65,8 @@ namespace GameBall
                 }
             }
         }
+
+
         
     }
 }

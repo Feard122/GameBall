@@ -10,7 +10,10 @@ namespace GameBall
 
         private float _lengthFlay;
         private float _speedRotation;
+
         #endregion
+
+        public Action CaughtPlayer;
 
 
         #region UnityMethod
@@ -18,7 +21,7 @@ namespace GameBall
         private void Awake()
         {
             _lengthFlay = Random.Range(1.0f, 2.0f);
-            _speedRotation = Random.Range(20.0f, 50.0f);
+            _speedRotation = Random.Range(20.0f, 50.0f);            
         }
         #endregion
 
@@ -27,7 +30,7 @@ namespace GameBall
 
         protected override void Interaction()
         {
-            // Destroy player
+            CaughtPlayer();
         }
 
         public void Flay()

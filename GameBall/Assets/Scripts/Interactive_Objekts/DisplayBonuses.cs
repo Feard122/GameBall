@@ -15,7 +15,7 @@ public class DisplayBonuses:IView
     public void Display(int value)
     {
         _point += value;
-        _text.text = $"Вы набрали {_point}";
+        _text.text = $"Вы набрали очков: {_point}";
     }
 }
 
